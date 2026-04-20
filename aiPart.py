@@ -28,12 +28,14 @@ contextLength = 1024
 maxTokens = 200
 temperature = 0.7
 freqPenalty = 0.6
+topk = 40
 
 defaultConfigFileContent = {
     "context length": 1024,
     "max tokens": 200,
     "temperature": 0.7,
-    "freq penalty": 0.6
+    "freq penalty": 0.6,
+    "top-k": 40
 }
 
 #------
@@ -77,7 +79,7 @@ def initConfigFile():
 initConfigFile()
 
 def reloadModelParams():
-    global contextLength, maxTokens, temperature, freqPenalty
+    global contextLength, maxTokens, temperature, freqPenalty, topk
 
     if os.path.exists(configFile):
         try:
@@ -88,6 +90,7 @@ def reloadModelParams():
                 maxTokens = loadedConfigFile.get("max tokens", 200)
                 temperature = loadedConfigFile.get("temperature", 0.7)
                 freqPenalty = loadedConfigFile.get("freq penalty", 0.6)
+                topk = loadedConfigFile.get("top-k", 40)
 
         except json.JSONDecodeError:
             initConfigFile()
