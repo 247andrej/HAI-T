@@ -50,7 +50,7 @@ def getResponse():
             break
 
     try:
-        output = aiPart.llm.create_chat_completion(contextLimitedHistory, max_tokens=aiPart.maxTokens, frequency_penalty=aiPart.freqPenalty, temperature=aiPart.temperature)
+        output = aiPart.llm.create_chat_completion(contextLimitedHistory, max_tokens=aiPart.maxTokens, frequency_penalty=aiPart.freqPenalty, temperature=aiPart.temperature, top_k=aiPart.topk)
         tempHistory.append(output["choices"][0]["message"])
         print(f"{aiPart.llm.metadata.get('general.name', 'Unknown Model')}: {output['choices'][0]['message']['content']}")
     except Exception as err:
@@ -164,7 +164,7 @@ commands = {
     "ldch": loadChatHistory,
     "lsdr": listDirectory,
     "cls": partial(os.system, "clear"),
-    "shch":  partial(print, tempHistory),
+    "shch":  lambda: print(tempHistory),
     "popch": removeLastMessageFromChatHistory,
     "chat": setChatMode
 }
